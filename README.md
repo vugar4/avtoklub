@@ -19,11 +19,11 @@ npm.cmd run build
 
 ## Hostinger yayımı
 
-Hədəf: Hostinger Cloud Startup, `peachpuff-crab-388123.hostingersite.com`.
+Hədəf: Hostinger Cloud Startup. Hazırda `peachpuff-crab-388123.hostingersite.com` ayrıca PHP başlanğıc saytıdır. Hostinger-in [Node.js qaydasına](https://www.hostinger.com/support/how-to-deploy-a-nodejs-website-in-hostinger/) görə Web App yeni sayt kimi yaradılır; onun müvəqqəti ünvanı ilkin qoşulmada müəyyənləşəcək. Mövcud saytı silmədən saxla.
 
 GitHub-dakı `main` budağı iş üçündür. Hostinger yalnız `production` budağına bağlanmalıdır. Beləliklə, yerli iş və `main`-ə göndərilən dəyişikliklər canlı saytı dəyişmir. İstifadəçi yayımı istəyəndə `scripts/publish.ps1` yoxlamaları keçirib həmin təsdiqlənmiş commit-i `production` budağına göndərir. Hostinger GitHub inteqrasiyası bu budaqdakı hər push-u avtomatik qurub yayımlayır.
 
-Hostinger panelində bir dəfə **Web App → Import Git Repository** yolu ilə özəl `globalsefcaremmc-bit/avtoklub` repozitoriyasını və `production` budağını seçmək lazımdır. Framework `Next.js`, Node.js `22.x`, kök qovluq `.`, build əmri `npm run build`, start əmri `npm run start` olmalıdır. Paneldə GitHub hesabının əlaqələndirilməsi tələb oluna bilər. Bu ilkin qoşulmadan sonra ZIP yükləməyə ehtiyac qalmır.
+Hostinger panelində bir dəfə **Web App → Import Git Repository** yolu ilə özəl `globalsefcaremmc-bit/avtoklub` repozitoriyasını və `production` budağını seçmək lazımdır. Framework `Next.js`, Node.js `22.x`, kök qovluq `.`, build əmri `npm run build`, start əmri `npm run start` olmalıdır. Paneldə GitHub hesabının əlaqələndirilməsi tələb oluna bilər. Bu ilkin qoşulmadan sonra ZIP yükləməyə ehtiyac qalmır. İlk yayım zamanı verilən canlı URL-i burada qeyd et.
 
 Yayım əmri yalnız istifadəçi canlı saytı yeniləməyi istədikdə işlədilir:
 
