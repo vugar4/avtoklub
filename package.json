@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:webpack": "next build --webpack",
     "start": "next start",
     "db:seed": "node database/seed.mjs",
     "db:migrate": "node database/migrate.mjs",
