@@ -1,0 +1,8 @@
+"use client";
+import { useState } from "react";
+import { ShieldCheck } from "lucide-react";
+import { toast } from "sonner";
+import { post, User } from "@/lib/client/api";
+import { Avatar } from "./ui";
+type Member=User&{clubRole?:string};
+export function ClubModeration({clubId,role,members,onChange}:{clubId:string;role?:string|null;members:Member[];onChange:()=>void}){const [busy,setBusy]=useState<string|null>(null);if(role!=="admin"&&role!=="moderator")return null;async function change(id:string,next:"remove"|"member"|"moderator"){setBusy(id);try{await post(`/api/clubs/${clubId}/members/${id}`,{role:next});toast.success("Üzvlük yeniləndi");onChange()}catch(e){toast.error(e instanceof Error?e.message:"Əməliyyat alınmadı")}finally{setBusy(null)}}return <div className="card p-5"><h2 className="flex items-center gap-2 text-sm font-bold"><ShieldCheck size={17}/>Klub idarəetməsi</h2><p className="mt-2 text-xs leading-5 text-[#8c939d]">Üzvlərin rolunu və klub üzvlüyünü idarə et.</p><div className="mt-4 max-h-72 space-y-3 overflow-y-auto">{members.filter(m=>m.clubRole!=="admin").map(m=><div key={m.id} className="flex items-center gap-2"><Avatar name={m.name} src={m.avatarUrl} size={30}/><span className="min-w-0 flex-1 truncate text-xs font-semibold">{m.name}</span><select aria-label={`${m.name} üçün rol`} disabled={busy===m.id} className="max-w-24 rounded-lg border border-[#e7e9ec] bg-white p-1 text-[11px]" value={m.clubRole||"member"} onChange={e=>void change(m.id,e.target.value as "remove"|"member"|"moderator")}><option value="member">Üzv</option>{role==="admin"&&<option value="moderator">Moderator</option>}<option value="remove">Çıxar</option></select></div>)}</div></div>}

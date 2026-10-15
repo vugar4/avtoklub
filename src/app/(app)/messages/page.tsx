@@ -1,0 +1,3 @@
+import { ConversationList } from "@/components/conversations";
+import { MessageCircle } from "lucide-react";
+export default function MessagesPage(){return <div className="grid min-h-[620px] gap-4 md:grid-cols-[320px_minmax(0,1fr)]"><ConversationList/><div className="card hidden items-center justify-center md:flex"><div className="text-center"><div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#fff4bd]"><MessageCircle size={28}/></div><h2 className="text-lg font-bold">Söhbəti seç</h2><p className="mt-2 text-sm text-[#9299a2]">Avtomobil söhbəti bir mesajla başlayır.</p></div></div></div>}

@@ -1,0 +1,9 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { MessageCircle } from "lucide-react";
+import { User, relativeDate } from "@/lib/client/api";
+import { useResource } from "@/lib/client/hooks";
+import { Avatar, Empty, ErrorState, LoadingCards } from "./ui";
+export type Conversation={id:string;other:User;lastMessage:{id:string;body:string;senderId:string;createdAt:string}|null;unread:number;updatedAt:string;listingId?:string|null};
+export function ConversationList({compact=false}:{compact?:boolean}){const pathname=usePathname(),{data,loading,error,reload}=useResource<Conversation[]>("/api/conversations");return <div className={compact?"":"card overflow-hidden"}><div className="border-b border-[#eceef1] p-4"><p className="eyebrow mb-1">SÖHBƏTLƏR</p><h1 className="text-xl font-bold tracking-[-.04em]">Mesajlar</h1></div>{loading?<div className="p-4"><LoadingCards count={2}/></div>:error?<div className="p-4"><ErrorState message={error} retry={()=>void reload()}/></div>:!data?.length?<div className="p-4"><Empty icon={<MessageCircle size={24}/>} title="Hələ mesaj yoxdur" text="Profil və ya elan səhifəsindən söhbətə başlaya bilərsən."/></div>:<div className="divide-y divide-[#f1f2f4]">{data.map(c=><Link key={c.id} href={`/messages/${c.id}`} className={`flex gap-3 p-4 hover:bg-[#f7f8f9] ${pathname===`/messages/${c.id}`?"bg-[#fff8dc]":""}`}><Avatar name={c.other.name} src={c.other.avatarUrl}/><div className="min-w-0 flex-1"><div className="flex items-center justify-between gap-2"><b className="truncate text-sm">{c.other.name}</b><span className="shrink-0 text-[11px] text-[#a0a6af]">{relativeDate(c.updatedAt)}</span></div><p className="mt-1 truncate text-xs text-[#8b929c]">{c.lastMessage?.body||"Söhbətə başla"}</p></div>{c.unread>0&&<span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#ffcc00] px-1 text-[10px] font-black">{c.unread}</span>}</Link>)}</div>}</div>}
