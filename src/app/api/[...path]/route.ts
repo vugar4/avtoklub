@@ -38,7 +38,12 @@ async function dispatch(req: NextRequest, parts: string[]): Promise<NextResponse
   const p = page(req);
   if (method !== 'GET') {
     const origin = req.headers.get('origin');
-    if (origin && origin !== req.nextUrl.origin) return fail('Etibarsız sorğu.', 403);
+    const forwardedProto = req.headers.get('x-forwarded-proto');
+    const host = req.headers.get('host');
+    const forwardedOrigin = host && (forwardedProto === 'http' || forwardedProto === 'https')
+      ? `${forwardedProto}://${host}`
+      : null;
+    if (origin && origin !== req.nextUrl.origin && origin !== forwardedOrigin) return fail('Etibarsız sorğu.', 403);
     if (req.headers.get('sec-fetch-site') === 'cross-site') return fail('Etibarsız sorğu.', 403);
   }
 
